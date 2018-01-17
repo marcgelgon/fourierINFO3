@@ -1,9 +1,11 @@
 
-%!TEX encoding = IsoLatin 
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% %
+% %  Poly INFO3 - Analyse de Fourier
+%
+%  se compile avec xelatex
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -18,8 +20,7 @@
 \usepackage{xltxtra}
 
 \setmainfont{Cambria}
-%\usefonttheme{serif}
-%\usefonttheme{professionalfonts}
+
 
 \usepackage{pdfpages}
 
@@ -38,18 +39,13 @@
 \setlength{\unitlength}{7ex}            % unitÈ pour graphiques
 
 \usepackage{harvard}
-%\usepackage[latin1]{inputenc}
 
-%\usepackage[francais]{babel}
 \usepackage{amssymb}
-%\usepackage[french]{babel}
+
 \usepackage{amsmath}
 \usepackage{boxedminipage}
 \usepackage{amsthm}
-%\usepackage[dvips]{graphicx}
-%\usepackage{color}
-%\usepackage{epic}
-%\graphicspath{{Figures/}} 
+
 
 \usepackage{pgfplots}
 \usepackage{ifpdf}
@@ -66,12 +62,9 @@
 \usepackage{float}
 
 
+%\usepackage{hyperref} % ça serait bien de le remettre pour rendre la table des matières navigable
 
-
-
-%\usepackage{hyperref}
-
-\theoremstyle{plain} %\part{title}
+\theoremstyle{plain} 
 \theoremstyle{definition}
 \newtheorem{definition}{Définition}[section]
 \newtheorem{example}{Exemple}[section]
@@ -110,7 +103,6 @@
 
 \parskip 7pt
 
-%\parindent 0pt
 
 \newcommand{\inttotal}{\int_{-\infty}^{\infty}}
 \newcommand{\intpositive}{\int_{0}^{\infty}}
@@ -139,14 +131,6 @@
 {\huge INFO 3} \\
 
 \vfill
-
-%{\Large M. Gelgon et al.  \footnote{Nombreuses contributions de Jp Guédon, V.Ricordel, J.Cohen, N.Normand} \\
-%Département informatique \\
-%Ecole polytechnique de l'université de Nantes}  \\
-
-%Ce document sert de support d'enseignement pour un cours-TD de 12h, pour un public d'élèves-ingénieurs en informatique (1ere année de cycle ingénieur). Dans le cursus ingénieur, il est suivi par des enseignements sur traitement du signal discret et sur les données multimédia, où les concepts vus ici sont prolongés et illustrés.  Ce cours est aussi une occasion de voir ou revoir, en les manipulant dans le contexte de l'analyse de Fourier, des concepts mathématiques classiques pour le calcul d'intégrales, les espaces de fonctions.
-
-\vfill
 CC-BY-NC-SA  \\
 
 M. Gelgon, N. Normand, V. Ricordel \\
@@ -159,95 +143,16 @@ Dernière compilation : \today
 \end{titlepage}
 
 \tableofcontents
-%\listoffigures
-%\bibliographystyle{agsm}
-%\bibliography{biblio}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\pagebreak
 
 \include{intuitions}
 \include{cours_series}
 \include{exos_series}
 \include{transfo_fourier}
+\include{exercices_transfo}
 
-\exercice
-%
-Déterminer la transformée de Fourier de la fonction suivante (fonction
-{ porte } ou { impulsion rectangulaire }) :
-%
-\begin{equation*}
-p(t) =
-\begin{cases}
-1 & \mbox{si } t \in ] - \frac{a}{2},\frac a 2 ]\\
-0 & \mbox{sinon}
-\end{cases}
-\end{equation*}
-
-\exercice
-%
-Démontrer les propriétés suivantes de la transformation de Fourier :
-\begin{enumerate}
-\item dérivation (propriété~\ref{transfo-derivation}),
-\item translation (propriété~\ref{transfo-translation}),
-\item linéarité (propriété~\ref{transfo-linearite}).
-\end{enumerate}
-
-\exercice Déterminer la transformée de Fourier de la fonction suivante
-(fonction { triangle } ou { impulsion triangulaire }) :
-%
-\begin{equation*}
-f(t) =
-\begin{cases}
--\frac 1 a  t + 1 & \mbox{si } t \in [ 0, a ]\\
-\frac 1 a  t + 1 & \mbox{si } t \in [ -a, 0 [\\
-0 & \mbox{sinon}
-\end{cases}
-\end{equation*}
-
-
-\exercice En utilisant les propriétés de la transformée de Fourier,
-déterminer la transformée de Fourier de la fonction triangle (donnée
-ci-dessus) en utilisant le fait qu'on peut exprimer la dérivée de la
-fonction triangle en fonction de la fonction porte.
-
-
-\exercice \label{convol-porte} Déterminer le produit de convolution de la fonction porte
-par elle-même.
-
-\exercice 
-Démontrer les propriétés suivantes du produit de convolution :
-\begin{enumerate}
-
-\item commutativité (propriété~\ref{convolution-commut}),
-
-\item distributivité (propriété~\ref{convolution-distrib}),
-
-\item dérivation (propriété~\ref{convolution-derivation}).
-
-\end{enumerate}
-
-\exercice Démontrer la propriété~\ref{convol_transfo1} du produit de convolution par rapport à la transformation de Fourier.
-
-\exercice Déterminer la transformée de Fourier de la fonction triangle
-en utilisant les propriétés du produit de convolution et le produit
-de convolution de la fonction porte par elle-même.
-
-\exercice Déterminer la transformée de Fourier de la fonction suivante définie sur $\mathbb R^2$ :
-%
-\begin{equation*}
-f(x,y) =
-\begin{cases}
- 1  & \mbox{si } -1 \leq x \leq 1 \mbox{ et } -1 \leq y \leq 1\\
-0 & \mbox{sinon}
-\end{cases}
-\end{equation*}
-
-
-\exercice Déterminer la transformée de Fourier de la fonction suivante (gaussienne) :
-$$f(t) = e^{-\pi t^2}$$
-
-%\include{temps_frequence}
+% on laisse tomber ? Un peu dommage mais on doit faire des choix
+% on peut le remettre si on gagne du temps ailleurs 
+%\include{temps_frequence}  
 
 \end{document} 
 
