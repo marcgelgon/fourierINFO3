@@ -1,3 +1,4 @@
-# Source latex Polycopié INFO3 - Analyse de Fourier
+## Source latex Polycopié - Analyse de Fourier
+
 
 ATTENTION - se compile avec xelatex
