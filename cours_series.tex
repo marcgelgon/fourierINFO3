@@ -27,7 +27,7 @@ Par ailleurs, l'analyse de Fourier est, à l'occasion, un outil de calcul simpli
 
 Soit
 %\footnote{Plus généralement, il faudrait considérer les fonctions
-%  de $\R$ vers $\C$ mais on s'en dispensera dans ce chapitre.}
+%  de $\RR$ vers $\CC$ mais on s'en dispensera dans ce chapitre.}
  $f$ fonction périodique de période $2\pi$, d'une variable réelle, vérifiant certaines propriétés de continuité, qui seront précisées en section~\ref{sec_convergence}.
 
 %On peut ré-écrire $e^{inx}=cos(nx)\; +\; i\;sin(nx)$.
@@ -74,11 +74,11 @@ Pour s'embêter avec ces nouvelles définitions ? Parce qu'ainsi :
   \item La famille $\{sin(x),cos(x),\dots,sin(nx),cos(nx),\dots...,\}$ est une famille orthonormée et pas seulement orthogonale.
   \item On peut identifier les \emph{coefficients de Fourier} $a_0$, $a_n$ et
  $b_n$, coefficients de la combinaison linéaire, comme suit :
- $\forall u\in \R$ :
+ $\forall u\in \RR$ :
 \begin{eqnarray}
 & a_0 & =\frac{1}{2\pi}\int_{u}^{u+2\pi}f(x)dx \label{a0}\\
-\text{pour} ~ n\in \N^* & a_n & = \langle f, cos(nx) \rangle = \frac{1}{\pi}\int_{u}^{u+2\pi}f(x)~ cos(nx)~ dx  \label{an}\\
-\text{pour} ~ n\in \N^* & b_n & = \langle f, sin(nx) \rangle= \frac{1}{\pi}\int_{u}^{u+2\pi}f(x)~ sin(nx) dx  \label{bn}
+\text{pour} ~ n\in \NN^* & a_n & = \langle f, cos(nx) \rangle = \frac{1}{\pi}\int_{u}^{u+2\pi}f(x)~ cos(nx)~ dx  \label{an}\\
+\text{pour} ~ n\in \NN^* & b_n & = \langle f, sin(nx) \rangle= \frac{1}{\pi}\int_{u}^{u+2\pi}f(x)~ sin(nx) dx  \label{bn}
 \end{eqnarray}
   \end{itemize}
 
@@ -86,7 +86,7 @@ Pour s'embêter avec ces nouvelles définitions ? Parce qu'ainsi :
 On trouve ici la justification du chapitre 1 du document : chaque coefficient $a_n$ et $b_n$ est le résultat du produit
   scalaire usuel entre la fonction $f$ et une des fonctions de la base des
   séries de Fourier. De manière analogue au produit scalaire dans
-  $\R^n$, on peut voir cette opération comme une projection de $f$
+  $\RR^n$, on peut voir cette opération comme une projection de $f$
   sur chaque fonction de base, permettant d'identifier les
   coefficients de sa décomposition comme une combinaison linéaire de
   fonctions trigonométriques simples. En prenant le point de vue
@@ -96,7 +96,7 @@ Remarques  :
 
 \begin{enumerate}
 \item Les trois intégrales \ref{a0} à \ref{bn}  couvrent la période de $f$,
-  mais comme l'indique ``$\forall u\in \R$'', le début et la fin de
+  mais comme l'indique ``$\forall u\in \RR$'', le début et la fin de
   l'intervalle d'intégration sont sans importance, du moment que
   l'intervalle est une période de $f$. On peut  donc choisir une
   valeur de $u$ qui rend le calcul le plus simple possible (par exemple $u=0$ ou $u=-\pi$, dans le cas d'une période $2\pi$).
@@ -115,7 +115,7 @@ Remarques  :
 
 \section{Reconstruction approximative} 
 
-Contrairement à la décomposition de vecteurs dans $\R^n$ où on peut reconstruire de manière exacte n'importe quel vecteur par une somme \emph{finie} parce qu'on est dans un espace de dimension finie, on a généralement besoin d'une somme infinie et qu'on fait cette décomposition dans un espace de fonctions de dimension infinie. La base $\{1,sin(x),cos(x),\dots,sin(nx),cos(nx),\dots...\}$ est donc composée d'une infinité de fonctions.
+Contrairement à la décomposition de vecteurs dans $\RR^n$ où on peut reconstruire de manière exacte n'importe quel vecteur par une somme \emph{finie} parce qu'on est dans un espace de dimension finie, on a généralement besoin d'une somme infinie et qu'on fait cette décomposition dans un espace de fonctions de dimension infinie. La base $\{1,sin(x),cos(x),\dots,sin(nx),cos(nx),\dots...\}$ est donc composée d'une infinité de fonctions.
 
 En restreignant la série de Fourier d'une fonction $f$ à une somme
 \emph{finie}, formée par les $N$ premières composantes de la série, on obtient une
@@ -254,30 +254,30 @@ f(x) & = A_0+\sum_{n=1}^{\infty}[A_n cos(n\frac{2\pi}{T}x) + B_n sin(n\frac{2\pi
 
 \begin{eqnarray}
 & A_0 & =\frac{1}{T}\int_{u}^{u+T}f(x)dx \label{a0T}\\
-n\in \N^* & A_n & =\frac{2}{T}\int_{u}^{u+T}f(x)\ cos(n\omega~x) dx  \label{anT}\\
-n\in \N^* & B_n & =\frac{2}{T}\int_{u}^{u+T}f(x)\ sin(n\omega~x) dx  \label{bnT}
+n\in \NN^* & A_n & =\frac{2}{T}\int_{u}^{u+T}f(x)\ cos(n\omega~x) dx  \label{anT}\\
+n\in \NN^* & B_n & =\frac{2}{T}\int_{u}^{u+T}f(x)\ sin(n\omega~x) dx  \label{bnT}
 \end{eqnarray}
 
 où à $u$ s'applique la remarque déjà faite pour le cas d'une période quelconque.
 
-\section{Cas où le calcul des coefficients $a_n$ et $b_n$ se simplifie}
+\section{Cas où le calcul des coefficients \texorpdfstring{$a_n$}{a\subscriptn} et \texorpdfstring{$b_n$}{b\subscriptn} se simplifie}
 
 Certaines éventuelles propriétés de $f$ (supposée de période $2\pi$) 
 permettent des réécritures des expressions ~\ref{a0},~\ref{an} et
 ~\ref{bn}, qui permettent souvent de simplifier le calcul de ces coefficients :
-\subsection{Si $f$ est paire}
+\subsection{Si \texorpdfstring{$f$}{f} est paire}
 \begin{eqnarray}
 & a_0=&\frac{1}{\pi}\int_{0}^{\pi}f(x)dx \label{a0paire}\\
-n\in \N^* & a_n=&\frac{2}{\pi}\int_{0}^{\pi}f(x)\ cos(nx) dx  \label{anpaire}\\
-n\in \N^* & b_n=&0  \label{bnpaire}
+n\in \NN^* & a_n=&\frac{2}{\pi}\int_{0}^{\pi}f(x)\ cos(nx) dx  \label{anpaire}\\
+n\in \NN^* & b_n=&0  \label{bnpaire}
 \end{eqnarray}
 Autrement dit, on peut synthétiser une fonction paire à partir des
 seules composantes en cosinus (plus éventuellement une constante $a_0$).
-\subsection{Si $f$ est impaire}
+\subsection{Si \texorpdfstring{$f$}{f} est impaire}
 \begin{eqnarray}
 & a_0=&0\label{aimpaire0}\\
-n\in \N^* & a_n=&0  \label{animpaire}\\
-n\in \N^* & b_n=& \frac{2}{\pi}\int_{0}^{\pi}f(x)\ sin(nx) dx \label{bnimpaire}
+n\in \NN^* & a_n=&0  \label{animpaire}\\
+n\in \NN^* & b_n=& \frac{2}{\pi}\int_{0}^{\pi}f(x)\ sin(nx) dx \label{bnimpaire}
 \end{eqnarray}
 %\subsection{Coefficients d'une dérivée}
 %\subsection{Effet de la translation sur les coefficients de Fourier}
@@ -375,7 +375,7 @@ On pourrait montrer une transformation semblable vers une somme de sinus plutôt
 Si on voulait être synthétique, on pourrait présenter la série de
 Fourier comme une somme de fonctions périodiques de la forme :
 \begin{eqnarray}
-\R & \rightarrow \C \\
+\RR & \rightarrow \CC \\
 x & \mapsto e^{inx}
 \end{eqnarray}
 Supposons $f$ de période $2\pi$. 
@@ -417,17 +417,17 @@ Soit $f$ une fonction de période $2\pi$ vérifiant les conditions de Dirichlet.
 Alors : 
 \begin{eqnarray}
 & a_0(f')&=0 \label{eqderivee}\\
-\text{si~} n\in \N^* & a_n(f')&=n~b_n(f) \\
-\text{si~} n\in \N^* & b_n(f')&=-n~a_n(f) \\
-\text{si~} n\in \N^* & c_n(f')&=i~n~c_n(f)
+\text{si~} n\in \NN^* & a_n(f')&=n~b_n(f) \\
+\text{si~} n\in \NN^* & b_n(f')&=-n~a_n(f) \\
+\text{si~} n\in \NN^* & c_n(f')&=i~n~c_n(f)
 \end{eqnarray}
 Plus généralement, si $f$ est de période $T$, c'est-à-dire de
 pulsation $\omega=\frac{2\pi}{T}$ :
 \begin{eqnarray}
 & a_0(f')&=0 \\
-\text{si~}n\in \N^* & a_n(f')&=n~\omega~b_n(f) \\
-\text{si~}n\in \N^* & b_n(f')&=-n~\omega~a_n(f) \\
-\text{si~}n\in \N^* & c_n(f')&=i~n~\omega~c_n(f)
+\text{si~}n\in \NN^* & a_n(f')&=n~\omega~b_n(f) \\
+\text{si~}n\in \NN^* & b_n(f')&=-n~\omega~a_n(f) \\
+\text{si~}n\in \NN^* & c_n(f')&=i~n~\omega~c_n(f)
 \end{eqnarray}
 
 \subsection{Coefficients de Fourier d'une translatée}
@@ -453,7 +453,7 @@ c_n(\lambda f+\mu g)=\lambda c_n(f)  + \mu c_n (g)
 
 Cette propriété découle immédiatement de la linéarité de l'intégrale. On a tout intérêt à l'utiliser pour simplifier le calcul de coefficients en série de Fourier,  si la fonction à traiter se décompose comme la somme (plus généralement, combinaison linéaire) de plusieurs fonctions élémentaires dont les coefficients se calculent plus simplement. Il suffit alors de combiner facilement les coefficients obtenus sur les fonctions élémentaires.
 
-\section{Egalité de Parseval}
+\section{Égalité de Parseval}
 
 Une propriété importante des séries de Fourier est le théorème de
 Parseval. Soit une fonction $f$, périodique de période $T$. Dans les cas des coefficients complexes et réels, l'égalité de Parseval s'écrit :
@@ -468,7 +468,7 @@ Un point pratique qui découle de cette expression est que les sommes $a_0^2 + \
 Cette expression permet aussi de calculer la valeur de certaines séries : les exercices 13 et 14 l'illustrent.
 
 % ci-dessous OSEF on ferait mieux d'évoquer Pythagore éventuellement
-%L'égalité de Parseval permet aussi la démonstration d'une propriété bien connue : ``soit, dans $\R^2$, l'ensemble courbes fermées. La courbe de longueur minimale dont l'intérieur définit un domaine d'aire fixée est un cercle.''
+%L'égalité de Parseval permet aussi la démonstration d'une propriété bien connue : ``soit, dans $\RR^2$, l'ensemble courbes fermées. La courbe de longueur minimale dont l'intérieur définit un domaine d'aire fixée est un cercle.''
 
 http://madoc.univ-nantes.fr/mod/resource/view.php?id=401686
 

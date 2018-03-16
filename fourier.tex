@@ -62,7 +62,10 @@
 \usepackage{float}
 
 
-%\usepackage{hyperref} % ça serait bien de le remettre pour rendre la table des matières navigable
+\usepackage[hidelinks]{hyperref}
+\DeclareTextCommand{\pdfRR}{PU}{\376\377\041\035}
+\DeclareTextCommand{\superscriptn}{PU}{\376\377\040\177}
+\DeclareTextCommand{\subscriptn}{PU}{\376\377\040\231}
 
 \theoremstyle{plain} 
 \theoremstyle{definition}
@@ -79,13 +82,13 @@
 
 
 
-\newcommand{\N}{\mathbb{N}}                     
-\newcommand{\R}{\mathbb{R}}      
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\K}{\mathbb{K}} 
-\newcommand{\LL}{\mathcal{L}}                 
-\newcommand{\M}{\mathcal{M}}    
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\KK}{\mathbb{K}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\MM}{\mathcal{M}}
 
 
 
