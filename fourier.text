@@ -1,0 +1,1405 @@
+![image](logo-polytech.pdf)
+
+\
+
+INFO 3\
+
+CC-BY-NC-SA\
+
+M. Gelgon, N. Normand, V. Ricordel\
+
+Point de contact pour remarques et corrections :
+marc.gelgon@univ-nantes.fr
+
+Dernière compilation :
+
+Intuitions sur les espaces de fonctions
+=======================================
+
+Ce cours se veut volontairement informel sur nombre de points
+mathématiques. Il passe sous silence de nombreuses hypothèses et ne
+formalise pas les espaces de fonctions [^1] ni les distributions [^2],
+par exemple, alors qu’il les manipule. Quand on passe à la mise en
+oeuvre informatique (numérique et discrétisée) des concepts traités dans
+ce cours, beaucoup de ces difficultés ne se posent néanmoins plus.
+
+Composition-décomposition de vecteurs dans $\mathbb{R}^n$
+---------------------------------------------------------
+
+### L’espace vectoriel $\mathbb{R}^n$, décomposition dans la base canonique
+
+On a l’habitude de se représenter de façon géométrique des vecteurs dans
+$\mathbb{R}^n$ et de les manipuler (par exemple, les ajouter). En
+particulier, considérant $\mathbb{R}^n$ comme un espace vectoriel et
+disposant d’une base $(e_1,....,e_n)$ dans cet espace (la base canonique
+ou une autre), l’algèbre linéaire établit qu’on peut fabriquer n’importe
+quel vecteur $u$ de $\mathbb{R}^n$ en construisant une combinaison
+linéaire des vecteurs de cette base (ici les $a_i$ sont des réels):
+
+$$u=a_1.e_1+\dots+a_n.e_n
+\label{eq:decomposition_lineaire}$$
+
+Il est également établi que cette combinaison linéaire est unique,
+c.a.d. qu’étant donné un vecteur $u$ et une base $(e_1,....,e_n)$, il
+existe un et un seul ensemble de coefficients $(a_1,....,a_n)$ tel que
+$u=a_1.e_1+\dots+a_n.e_n$.
+
+### Décomposition d’un vecteur dans une base quelconque
+
+#### Par résolution d’un sytème linéaire
+
+Etant donné un vecteur $u$ dans $\mathbb{R}^n$, on peut avoir besoin de
+récupérer les coefficients $a_i$ de la décomposition de $u$ dans une
+base donnée. S’il s’agit de la base canonique, ces coefficients sont
+simplement les composantes du vecteur. S’il s’agit d’une autre base,
+cela peut, par exemple, se faire en résolvant un système de $n$
+équations à $n$ inconnues (qui sont les $a_i$).
+
+Par exemple, soit le vecteur $u=(5,3)^T$. Il se décompose sur la base
+canonique comme
+
+$$\begin{pmatrix} 5 \\ 3 \end{pmatrix} = 5  \begin{pmatrix} 1 \\ 0 \end{pmatrix} + 3  \begin{pmatrix} 0 \\ 1 \end{pmatrix}$$
+
+On peut identifier $a_1=5$ et $a_2=3$ immédiatement.
+
+Si on souhaite décomposer $u$ sur une autre base, par exemple la base
+formée par les vecteurs $e_1=(1,1)^T$ et $e_2=(-1,1)^T$, pour identifier
+$a_1$ et $a_2$, il faut résoudre
+
+$$\begin{pmatrix} 5 \\ 3 \end{pmatrix}  = a_1  \begin{pmatrix} 1 \\ 1 \end{pmatrix} + a_2  \begin{pmatrix} -1 \\ 1 \end{pmatrix}$$
+
+En écrivant cette équation comme 2 équations à 2 inconnues, on trouve
+rapidement $a_1=4$ et $a_2=-1$.
+
+#### Par projections orthogonales
+
+Regardons maintenant comment on peut obtenir les coefficients de la
+décomposition d’un vecteur $u$ sur une base de $\mathbb{R}^n$, en
+utilisant des projections orthogonales.
+
+$\mathbb{R}^n$ est un espace vectoriel, ce qui permet de faire des
+combinaisons linéaires de vecteurs, comme ci-dessus. Pour faire des
+projections orthogonales, il faut enrichir notre espace vectoriel avec
+un opérateur: le **produit scalaire**. Dans $\mathbb{R}^n$, notons
+$\langle u , v \rangle$ le produit scalaire entre deux vecteurs
+$u=(u_1,\dots,u_n)$ et $v=(v_1,\dots,v_n)$. La définition simple du
+produit scalaire dans $\mathbb{R}^n$ est :
+
+$$\langle u , v \rangle = \sum_{i=1}^n u_i.v_i$$
+
+La **norme euclidienne** $\|u\|$ d’un vecteur $u=(u_1,\dots,u_n)$ de
+$\mathbb{R}^n$, qui décrit intuitivement sa longueur indépendamment de
+son orientation, est définie à partir du produit scalaire
+$\langle u, u \rangle$ comme
+
+$$\|u\|= \sqrt{\langle u, u \rangle}=\sqrt{\sum_i u_i^2}$$
+
+Le produit scalaire entre deux vecteurs $u$ et $v$ de $\mathbb{R}^n$,
+tels qu’il y a un angle $\theta$ entre $u$ et $v$, peut se calculer
+comme:
+
+$$\langle u, v \rangle=\|u\|.\|v\|cos(\theta)$$
+
+Autrement dit, l’**angle**, du moins ce que peut en déterminer son
+cosinus, est calculable comme le produit scalaire normalisé par la
+longueur des vecteurs impliqués dans ce produit scalaire :
+
+$$cos(\theta) = \frac{\langle u, v \rangle}{\|u\|.\|v\|}$$
+
+Le produit scalaire permet aussi d’introduire la notion de **projection
+orthogonale** d’un vecteur de $\mathbb{R}^n$ sur un autre. De façon
+générale, la projection orthogonale d’un vecteur $u$ sur un vecteur $v$
+consiste à décomposer $u$ comme la somme d’un vecteur $u$ colinéaire à
+$v$, noté $u_{\| v}$ (dite "projection orthogonale de $u$ sur $v$") et
+une partie orthogonale à $v$, notée $u_{\perp v}$. Cette décomposition
+est unique (on n’en fait pas la démonstration ici).
+
+Appliquons la projection orthogonale au cas où on projete $u$ sur chacun
+des vecteurs $e_i$ de la base, tour à tour. Prenons ci-dessous le cas de
+la projection sur $e_1$, le premier vecteur de la base. On s’intéresse à
+la décomposition de $u$ comme la somme d’un vecteur colinéaire à $e_1$
+(dit "projection orthogonale de $u$ sur $e_1$"), noté $u_{\| e_1}$ et
+d’un vecteur orthogonal à $e_1$, notée $u_{\perp e_1}$.
+
+$$u = \underbrace{\quad u_{\| e_1} \quad}_{\text{projection orthogonale de $u$ sur $e_1$}} + \underbrace{\quad u_{\perp e_1}}_{\text{composante orthogonale à $e_1$ }} \quad$$
+
+[scale=3, axis/.style=-\>,blue,thick, vector/.style=-stealth,red,very
+thick, vector guide/.style=-\>,dashed,red,thick]
+
+​(O) at (0,0,0); (P) at (1,0,0); (Q) at (3,1,0); (M) at (3,0,0); (N) at
+(3,0.74\*,0.5\*);
+
+​(O) – (P) node[anchor=north east]$e_1$; (O) – (Q)
+node[anchor=south]$u$; ; (M) – (Q) node[anchor=north
+west]$u_{\perp e_1}$; (O) – (M) node[anchor= north east]$u_{\|e_1}$;
+
+Dans le triangle rectangle, on a :
+
+$$\langle u , e_1 \rangle   = \|u\|.\|e_1\|cos(\widehat{u,e_1})  =  \|u_{\|e_1}\|.\|e_1\| = \langle u_{\|e_1},e_1 \rangle$$
+
+Cela nous permet de caractériser la longueur du vecteur $u_{\|e_1}$ :
+
+$$\|u_{\|e_1}\|  = \frac{\langle u , e_1 \rangle}{\|e_1\|}$$
+
+Par ailleurs, comme $u$ et $e_1$ sont colinéaires, on a
+
+$$u_{\|e_1} = \|u_{\|e_1}\| . \frac{e_1}{\|e_1\|}$$
+
+Si bien qu’en conclusion, on peut exprimer $u_{\|e_1}$ en fonction de
+$e_1$ et identifier le coefficient $a_1$.
+
+$$u_{\|e_1} = \frac{\langle u , e_1 \rangle}{\|e_1\|^2} \quad e_1$$
+
+Si les $e_i$ sont orthogonaux deux à deux, c.a.d. qu’on a une **base
+orthogonale**, alors on a plus généralement :
+
+$$u = \frac{\langle u , e_1 \rangle}{\|e_1\|^2} \quad e_1 +\dots + \frac{\langle u , e_n \rangle}{\|e_n\|^2} \quad e_n$$
+
+qui est une nouvelle manière d’écrire l’équation
+([eq:decomposition~l~ineaire]) qui donne un moyen de calcul direct des
+coefficients $a_i$ de la décomposition, grâce au produit scalaire.
+
+Appliquons cela à l’exemple vu plus haut $u=(5,3)^T$ à décomposer sur la
+base $e_1=(1,1)^T$ et $e_2=(-1,1)^T$ , et on retrouve bien les résultats
+qu’on avait obtenus par résolution du système linéaire :
+
+$$a_1=\frac{\langle u , e_1 \rangle}{\|e_1\|^2} = \frac{\langle\begin{pmatrix} 5 \\ 3 \end{pmatrix},\begin{pmatrix} 1 \\ 1 \end{pmatrix}\rangle}{\sqrt{1^2+1^2}^2}=4 \quad \text{et} \quad a_2=\frac{\langle u , e_2 \rangle}{\|e_2\|^2} = \frac{\langle\begin{pmatrix} 5 \\ 3 \end{pmatrix},\begin{pmatrix} -1 \\ 1 \end{pmatrix}\rangle}{\sqrt{(-1)^2+1^2}^2}=-1$$
+
+Si, de plus, on considère le cas particulier où $\|e_i\|=1$ pour tout
+$i \in \{1,...,n\}$ (c.a.d. la base est **orthonormée** en plus d’être
+orthogonale), alors c’est encore plus simple :
+
+$$u = \langle u , e_1 \rangle ~e_1 +\dots + \langle u , e_n \rangle ~e_n$$
+
+Mêmes notions, mais sur des fonctions
+-------------------------------------
+
+La raison de tous les rappels ci-dessus est que l’analyse de Fourier
+travaille sur des concepts analogues, sinon que les éléments de l’espace
+sont des fonctions au lieu d’être des vecteurs de $\mathbb{R}^n$. Par
+exemple, la figure  [fonctions~o~rthogonales] illustre comment la
+combinaison linéaire de quelques fonctions élémentaires (ici
+trinométriques) permettrait de générer des fonctions très diverses.
+
+[H]
+
+[scale=3, axis/.style=-\>,blue,thick, vector/.style=-stealth,red,very
+thick, vector guide/.style=dashed,red,thick]
+
+​(O) at (0,0,0);
+
+​(P) at (,,);
+
+(0,0,0) – (1,0,0) node[anchor=north east]$sin(x)$; (0,0,0) – (0,1,0)
+node[anchor=north east]$sin(2x)$; (0,0,0) – (0,0,1)
+node[anchor=east]$cos(x)$;
+
+(0,0,0) – (1,2,1) node[anchor=south]$cos(x)+sin(x)+2sin(2x)$; ;
+
+(1,2,1) – (0,0,1); (1,2,1) – (1,0,0); (1,2,1) – (0,2,0); (0,0,0) –
+(0,2,0);
+
+[scale=0.63,xlabel=x (en degrés),title=cos(x)+sin(x)+2sin(2x) (en gras)
+] ; ; ; ;
+
+Les courbes en trait fin sont cos(x), sin(x) et sin(2x).
+[fonctions~o~rthogonales]
+
+Il reste utile de garder à l’esprit les interprétations géométriques
+qu’on a pour les vecteurs. On précise maintenant des adaptations des
+définitions et interprétations dans le cas des fonctions :
+
+### Produit scalaire entre fonctions
+
+[sec:prodscal]
+
+Soit l’espace $E$ sur $\mathbb{R}$ des fonctions continues sur $[a,b]$
+vers $\mathbb{R}$. Définissons un[^3] produit scalaire entre deux
+fonctions $f$ et $g$ de cet espace :
+
+$$\begin{aligned}
+E \times E & \rightarrow & \mathbb{R}\nonumber \\
+\langle f, g \rangle & \mapsto & \int_a^b f(x)\; g(x)\; dx\end{aligned}$$
+
+Le premier point à remarquer est que cette définition est semblable à
+cette qu’on a pour un produit scalaire usuel entre vecteurs : on fait la
+somme des produits sur les composantes du vecteurs - à ceci près que
+pour les fonctions cette somme est définie sur un espace continu $[a,b]$
+plutôt qu’un ensemble discret de composantes.
+
+L’**orthogonalité** entre $f$ et $g$ correspond, comme dans
+$\mathbb{R}^n$, au cas où le produit scalaire s’annule :
+
+$$\int_a^b f(x)g(x)=0$$
+
+La figure [premier~e~xemple] illustre trois exemples simples avec des
+fonctions orthogonales $f$ et $g$ définies sur $[-3,3]$. Sur ces
+exemples, les fonctions sont constantes par morceaux pour la commodité
+du calcul mental, mais de façon générale elles n’ont pas besoin d’être
+constantes par morceaux.
+
+[background rectangle/.style=fill=olive!5, show background rectangle]
+
+[group style=group size=1 by 3, horizontal sep=2cm, vertical sep=2cm,
+xmax=3,ymin=-2,ymax=2,scale=0.6,axis lines=center,xtick distance=1]
+(x,1); (x,0); (x,0); (x,1); (x,0); (x,0);
+
+[background rectangle/.style=fill=olive!5, show background rectangle]
+
+[group style=group size=1 by 3, horizontal sep=2cm, vertical sep=2cm,
+xmax=3,ymin=-2,ymax=2,scale=0.6,axis lines=center,xtick distance=1]
+(x,1); (x,1); (x,-1); (x,1); (x,-1); (x,1);
+
+[background rectangle/.style=fill=olive!5, show background rectangle]
+
+[group style=group size=1 by 3, horizontal sep=2cm, vertical sep=2cm ,
+xmax=3,ymin=-2,ymax=2,scale=0.6,axis lines=center,xtick distance=1]
+(x,1); (x,-1); (x,1); (x,-1); (x,1); (x,1); (x,-1); (x,-1);
+
+[premier~e~xemple]
+
+La définition plus générale du produit scalaire, qui englobe les cas
+particuliers des vecteurs dans $\mathbb{R}^n$ et des fonctions, et qu’on
+pourrait appliquer à encore d’autres types d’objets mathématiques
+(matrices, ...) est qu’un produit scalaire doit vérifier les propriétés
+suivantes :
+
+1.  il s’agit d’une *forme linéaire*, i.e. une application linéaire dont
+    l’image $\in \mathbb{R}$ (qui est le corps sur lequel est construit
+    l’espace vectoriel dont proviennent $f$ et $g$),
+
+2.  cette forme est *bilinéaire* et *symétrique* (bilinéaire : linéaire
+    vis-à-vis de $f$ et de $g$),
+
+3.  on dit que le produit scalaire est *défini positif*, c’est-à-dire :
+
+    1.  $\forall f \in E, \langle f, f \rangle=\int_a^bf(x)^2 dx~\geq 0 $
+
+    2.  $\langle f, f \rangle=\int_a^bf(x)^2 dx=0 \Longleftrightarrow f=0$
+
+“Produit scalaire” est donc une expression raccourcie de “forme
+bilinéaire symétrique définie positive”.
+
+La figure [exemples~p~roduitscalaire] montre d’autres exemples.
+
+[background rectangle/.style=fill=olive!5, show background rectangle]
+
+[group style=group size=1 by 3,scale=0.55,domain=0:360, axis
+lines=center] ; ; ;
+
+[align=center,font=**, yshift=2em] (title) at (current bounding
+box.north) Exemple 1;**
+
+[background rectangle/.style=fill=olive!5, show background rectangle]
+
+[group style=group size=1 by 3,horizontal sep=2cm, vertical sep=2cm,
+scale=0.5,domain=0:360, axis lines=center] ; ; ;
+
+[align=center,font=**, yshift=2em] (title) at (current bounding
+box.north) Exemple 2; **
+
+[background rectangle/.style=fill=olive!5, show background rectangle]
+
+[group style=group size=1 by 3,horizontal sep=2cm, vertical sep=2cm,
+scale=0.5,domain=0:360, axis lines=center] ; ; ;
+
+[align=center,font=**, yshift=2em] (title) at (current bounding
+box.north) Exemple 3; **
+
+[exemples~p~roduitscalaire]
+
+![Exemple de calcul symbolique en python pour le calcul d’un produit
+scalaire entre fonctions.](fourier-notebook-polytech.pdf)
+
+### Norme d’une fonction
+
+De façon analogue aux vecteurs, on peut définir la norme (dite
+*euclidienne*) d’une fonction $f$:
+
+$$\|f\|= \sqrt{\langle f, f \rangle}=\sqrt{\int_a^b f(t)^2dt}$$
+
+### Angle entre fonctions
+
+Une définition analogue aux vecteurs peut être construite pour l’angle
+entre deux fonctions $f$ et $g$:
+
+$$cos(\theta) = \frac{\langle f, g \rangle}{\|f\|.\|g\|}$$
+
+Séries de Fourier
+=================
+
+Joseph Fourier (1768 - 1830), Auxerrois de naissance, rapidement
+orphelin, a initialement hésité entre les voies mathématique et
+religieuse. Enseignant au collège de France et à Polytechnique, il a été
+impliqué dans la révolution française, les expéditions napoléoniennes et
+a été préfet de l’Isère, un peu contre son gré. Cette fonction lui a
+toutefois laissé le temps de développer une théorie concernant la
+décomposition de fonctions en séries trigonométriques, dont ce cours est
+l’objet. En 1808, il l’a soumise pour évaluation à Lagrange et Laplace,
+membres de l’Institut. L’article a alors été jugé moyennement clair et
+convaincant, ces jugements étant peut-être la preuve de l’originalité du
+travail, ou motivés par quelque concurrence pour un poste de prestige...
+
+De l’utilité d’étudier l’analyse de Fourier
+-------------------------------------------
+
+Dans la partie précédente, on a discuté de la manière dont on pouvait
+composer-décomposer (on parlera aussi de synthèse-analyse) une fonction
+comme une combinaison linéaire de fonctions simples. De façon générale,
+la décomposition de données et signaux comme des combinaisons de
+fonctions simples est une opération centrale en informatique, pour le
+traitement efficace de ces données et signaux. Ces décompositions
+fournissent de nouvelles représentations des signaux qui faciliteront la
+compression (une représentation des données qui est économe mais qui
+parvient à néanmoins représenter assez fidèlement les données
+initialement, notamment les signaux audio, image et vidéo),
+l’interprétation (la compréhension de phénomènes portés dans les données
+et les signaux), le filtrage (c.a.d. la sélection de sous-parties
+intéressantes des données). Ces décompositions (parfois qualifiées de
+parcimonieuses) sont aussi en lien étroit avec l’apprentissage (machine
+learning) dont, par exemple, les représentations internes des réseaux de
+neurones. Des sujets proches apparaîtront aussi dans des enseignements
+d’analyse statistique des données (analyse en composantes principales).
+
+Dans ce cadre général, l’analyse de Fourier est un cas particulier où
+les fonctions de base sont fixées et sont les fonctions
+trigonométriques. Dans d’autres sous-domaines, on utilise d’autres
+bases, ou bien on cherche des bases adaptatives et spécifiquement
+optimales pour les données à traiter. L’analyse de Fourier est, en
+particulier, très utilisée pour le traitement des images et sons et les
+questions de transmission de données, notamment parce qu’elle décompose
+les signaux selon l’axe des fréquences et que beaucoup de phénomènes ont
+des propriétés physiques ou perceptuelles qui varient selon la
+fréquence.
+
+Par ailleurs, l’analyse de Fourier est, à l’occasion, un outil de calcul
+simplifiant ou permettant certains calculs d’intégrales.
+
+Définition des séries de Fourier et calcul de leur coefficients
+---------------------------------------------------------------
+
+Soit $f$ fonction périodique de période $2\pi$, d’une variable réelle,
+vérifiant certaines propriétés de continuité, qui seront précisées en
+section [sec~c~onvergence].
+
+14.5cm L’objectif des séries de Fourier est de considérer $f$ comme une
+combinaison linéaire (généralement infinie) de fonctions
+trigonométriques élémentaires :
+
+$$f(x)=a_0+\sum_{n=1}^{\infty}[a_n cos(nx) + b_n sin(nx)]
+\label{defseries}$$
+
+où $a_0$, les $a_n$ et les $b_n$ sont des réels.
+
+Pour comprendre l’objectif général, on gagne à regarder tout de suite la
+figure [fig:exemple~a~pprox~c~arre] qui illustre l’expression d’une
+fonction $f$ comme une somme de fonctions trigonométriques.
+
+Il est bon de mettre un coup de projecteur sur une caractéristique
+essentielle de la définition ([defseries]) : les fonctions
+${cos(x), sin(x), cos(2x), sin(2x),...}$ forment une famille
+orthogonale, mais pas encore orthonormée.
+
+Modifions légèrement la définition du produit scalaire entre deux
+fonctions $f$ et $g$ qui avait été présentée en section [sec:prodscal],
+comme suit :
+
+$$\langle f, g \rangle  = \frac{1}{\pi}\int_0^{2\pi} f(x)\; g(x)\; dx$$
+
+En section [sec:prodscal], il avait été précisé qu’il n’y a pas de
+définition unique du produit scalaire, mais il faut et il suffit de
+vérifier les propriétés de forme bilinéaire semi-définie positive, qui
+sont toujours respectée par cette nouvelle définition.
+
+Il en résulte que la définition de la norme d’une fonction est, elle
+aussi, adaptée, comme suit :
+
+$$\|f\|= \sqrt{\langle f, f \rangle}= \sqrt{ \frac{1}{\pi}\int_0^{2\pi} f(t)^2dt}$$
+
+Pour s’embêter avec ces nouvelles définitions ? Parce qu’ainsi :
+
+-   La famille $\{sin(x),cos(x),\dots,sin(nx),cos(nx),\dots...,\}$ est
+    une famille orthonormée et pas seulement orthogonale.
+
+-   On peut identifier les *coefficients de Fourier* $a_0$, $a_n$ et
+    $b_n$, coefficients de la combinaison linéaire, comme suit :
+    $\forall u\in \mathbb{R}$ :
+
+    $$\begin{aligned}
+    & a_0 & =\frac{1}{2\pi}\int_{u}^{u+2\pi}f(x)dx \label{a0}\\
+    \text{pour} ~ n\in \mathbb{N}^* & a_n & = \langle f, cos(nx) \rangle = \frac{1}{\pi}\int_{u}^{u+2\pi}f(x)~ cos(nx)~ dx  \label{an}\\
+    \text{pour} ~ n\in \mathbb{N}^* & b_n & = \langle f, sin(nx) \rangle= \frac{1}{\pi}\int_{u}^{u+2\pi}f(x)~ sin(nx) dx  \label{bn}\end{aligned}$$
+
+On trouve ici la justification du chapitre 1 du document : chaque
+coefficient $a_n$ et $b_n$ est le résultat du produit scalaire usuel
+entre la fonction $f$ et une des fonctions de la base des séries de
+Fourier. De manière analogue au produit scalaire dans $\mathbb{R}^n$, on
+peut voir cette opération comme une projection de $f$ sur chaque
+fonction de base, permettant d’identifier les coefficients de sa
+décomposition comme une combinaison linéaire de fonctions
+trigonométriques simples. En prenant le point de vue constructif, on
+peut aussi dire qu’on *synthétise* $f$ comme une combinaison linéaire de
+fonctions de base.
+
+Remarques :
+
+1.  Les trois intégrales [a0] à [bn] couvrent la période de $f$, mais
+    comme l’indique “$\forall u\in \mathbb{R}$”, le début et la fin de
+    l’intervalle d’intégration sont sans importance, du moment que
+    l’intervalle est une période de $f$. On peut donc choisir une valeur
+    de $u$ qui rend le calcul le plus simple possible (par exemple $u=0$
+    ou $u=-\pi$, dans le cas d’une période $2\pi$).
+
+2.  $a_0$ peut être interprété comme la *valeur moyenne[^4]* de $f$ sur
+    la période. Il est essentiel de le voir par sa définition, et de
+    garder cette idée à l’esprit, notamment pour vérifier, que la valeur
+    calculée est raisonnable. Cette interprétation montre aussi que les
+    autres coefficients $a_n$ et $b_n$ synthétisent les *variations* de
+    $f$ autour de sa moyenne $a_0$.
+
+Reconstruction approximative
+----------------------------
+
+Contrairement à la décomposition de vecteurs dans $\mathbb{R}^n$ où on
+peut reconstruire de manière exacte n’importe quel vecteur par une somme
+*finie* parce qu’on est dans un espace de dimension finie, on a
+généralement besoin d’une somme infinie et qu’on fait cette
+décomposition dans un espace de fonctions de dimension infinie. La base
+$\{1,sin(x),cos(x),\dots,sin(nx),cos(nx),\dots...\}$ est donc composée
+d’une infinité de fonctions.
+
+En restreignant la série de Fourier d’une fonction $f$ à une somme
+*finie*, formée par les $N$ premières composantes de la série, on
+obtient une *approximation* de $f$ (dite d’ordre $N$). L’erreur
+d’approximation peut s’exprimer comme suit :
+
+$$err(x)=\underbrace{  f(x)- \Big( \underbrace{a_0+\sum_{n=1}^{N}[a_n cos(nx) + b_n sin(nx)]\Big)}_{\text{reconstruction approximative}}}_{\text{erreur d'approximation}}
+\label{erreur_approx}$$
+
+Une manière usuelle de qualifier la qualité d’une approximation est
+l’erreur quadratique $\int_{-\pi}^{\pi}err(x)^2 dx$. Vous entendrez
+aussi souvent l’expression “moindres carrés” pour dénommer ce critère.
+
+Une bonne propriété de l’approximation par une série finie de Fourier
+est qu’étant donné le choix de la famille de fonctions trigonométriques,
+les coefficients obtenus par les expressions [a0] à [bn], pour le $N$
+qu’on s’est fixé, aboutissent une approximation optimale au sens que
+l’erreur quadratique est minimale. Pour des fonctions $f$ couvrant une
+grande diversité de signaux périodiques rencontrés couramment, cela
+conduit à produit de bonnes approximations de $f$ avec des
+approximations ne nécessitant qu’un faible nombre de termes de la série
+de Fourier.
+
+La figure [fig:exemple~a~pprox~c~arre] fournit un exemple décomposition
+en séries de Fourier pour la fonction $f$, périodique de période $2\pi$,
+qui vaut 1 de 0 à $\pi$ et -1 de $\pi$ à $2\pi$.
+
+[background rectangle/.style=fill=olive!5, show background rectangle]
+
+[group style=group size=2 by 2, horizontal sep=2cm, vertical
+sep=2cm,scale=0.8,samples=150] ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+; ;
+
+[align=center,font=**, yshift=2em] (title) at (current bounding
+box.north) Décomposition - synthèse ;**
+
+[fig:exemple~a~pprox~c~arre]
+
+Le calcul donne : $a_0=0$, $a_n=0$ pour tout $n>0$, $b_n=0$ si $n>0$ et
+pair, $b_n=\frac{4}{n\pi}$ impair.
+
+L’expression de $f$ en série de Fourier est donc :
+
+$$f(x)=\sum_{p=1}^\infty \frac{4}{(2p-1)\pi}sin((2p-1)x)$$
+
+[defseries].
+
+$$\begin{aligned}
+\text{Pour $N=1$ , on trouve } f_1(x) & =\frac{4}{\pi}sin(x) & \\
+\text{Pour $N=3$ , on trouve } f_3(x) & =\frac{4}{\pi}\Big(sin(x) & +\frac{1}{3}sin(3x) \Big) \\
+\text{Pour $N=5$  , on trouve } f_5(x) & =\frac{4}{\pi}\Big(sin(x)& +\frac{1}{3}sin(3x)+\frac{1}{5}sin(5x)\Big) \end{aligned}$$
+
+Remarquons que :
+
+-   la fonction “créneau” n’est pas continue mais elle a l’amabilité de
+    vérifier les conditions de Dirichlet. La reconstuction autour des
+    points de discontinuité présente les caractéristiques suivantes :
+
+    -   l’approximation obtenue à l’abscisse de la discontinuité est la
+        moyenne de la limite à droite et à gauche, conformément à ce qui
+        est raconté à la section  [sec~c~onvergence],
+
+    -   les discontinuités de la fonction ont du mal à être approximées
+        correctement : on appelle “phénomène de Gibbs” ces oscillations
+        aux alentours du point de discontinuité[^5]
+
+Conditions de convergence de la série de Fourier
+------------------------------------------------
+
+[sec~c~onvergence] Voici des conditions *suffisantes* pour que la
+décomposition en série de Fourier s’applique correctement. Si :
+
+-   $f$ est continue par morceaux, i.e. elle comporte un nombre fini de
+    discontinuités et, à chacun de ces points de discontinuité, il
+    existe des limites *finies* à droite et à gauche.
+
+-   $f$ comporte un nombre fini de maxima et de minima.
+
+alors la série de Fourier dont les coefficients sont définis par les
+expressions [a0] à [bn] converge vers :
+
+-   $f(x)$ aux points où $f$ est continue
+
+-   vers $[f(x^+)+f(x^-)]/2$ aux points où $f$ est discontinue.
+
+Ces conditions *suffisantes (pas nécessaires)* sont dites *conditions de
+Dirichlet[^6]*. En pratique, sur les données et signaux que l’on
+manipule dans le métier d’ingénieur, ces conditions sont presque
+toujours remplies, et ces questions de convergences ne posent pas grand
+problème.
+
+Cas d’une fonction de période quelconque
+----------------------------------------
+
+Tous les principes des séries de Fourier s’appliquent aussi à des
+périodes autres que $2\pi$, il faut simplement ajuster toutes les
+expressions. Dans le cas d’une fonction $f$ de période $T$[^7], en
+faisant le changement de variable $\frac{t}{T}=\frac{x}{2\pi}$, on
+trouve l’expression de la décomposition de $f$ :
+
+$$\begin{aligned}
+f(x) & = A_0+\sum_{n=1}^{\infty}[A_n cos(n\frac{2\pi}{T}x) + B_n sin(n\frac{2\pi}{T}x)] \\
+     & = A_0+\sum_{n=1}^{\infty}[A_n cos(n\omega x) + B_n sin(n\omega x)] \end{aligned}$$
+
+$$\begin{aligned}
+& A_0 & =\frac{1}{T}\int_{u}^{u+T}f(x)dx \label{a0T}\\
+n\in \mathbb{N}^* & A_n & =\frac{2}{T}\int_{u}^{u+T}f(x)\ cos(n\omega~x) dx  \label{anT}\\
+n\in \mathbb{N}^* & B_n & =\frac{2}{T}\int_{u}^{u+T}f(x)\ sin(n\omega~x) dx  \label{bnT}\end{aligned}$$
+
+où à $u$ s’applique la remarque déjà faite pour le cas d’une période
+quelconque.
+
+Cas où le calcul des coefficients $a_n$ et $b_n$ se simplifie
+-------------------------------------------------------------
+
+Certaines éventuelles propriétés de $f$ (supposée de période $2\pi$)
+permettent des réécritures des expressions  [a0], [an] et  [bn], qui
+permettent souvent de simplifier le calcul de ces coefficients :
+
+### Si $f$ est paire
+
+$$\begin{aligned}
+& a_0=&\frac{1}{\pi}\int_{0}^{\pi}f(x)dx \label{a0paire}\\
+n\in \mathbb{N}^* & a_n=&\frac{2}{\pi}\int_{0}^{\pi}f(x)\ cos(nx) dx  \label{anpaire}\\
+n\in \mathbb{N}^* & b_n=&0  \label{bnpaire}\end{aligned}$$
+
+Autrement dit, on peut synthétiser une fonction paire à partir des
+seules composantes en cosinus (plus éventuellement une constante $a_0$).
+
+### Si $f$ est impaire
+
+$$\begin{aligned}
+& a_0=&0\label{aimpaire0}\\
+n\in \mathbb{N}^* & a_n=&0  \label{animpaire}\\
+n\in \mathbb{N}^* & b_n=& \frac{2}{\pi}\int_{0}^{\pi}f(x)\ sin(nx) dx \label{bnimpaire}\end{aligned}$$
+
+Bien entendu les expressions  [a0], [an] et  [bn] sont toujours vraies
+et utilisables
+
+La série de Fourier sous la forme (amplitudes, déphasages)
+----------------------------------------------------------
+
+On trouvera ici un élément de réponse à la question suivante : "pourquoi
+faut-il à la fois des cosinus et des sinus dans la base ?"
+
+La figure [fig:effet~t~ranslation] montre trois fonctions créneau
+périodiques (en fait, elles sont toutes égales à une translation près le
+long de l’axe des abscisses). On appellera parfois cette translation
+*déphasage*, dans la mesure où ces fonctions sont périodiques; si l’axe
+des abscisses était l’axe du temps, ça correspondrait à des signaux
+légèrement en avance ou en retard les uns par rapport aux autres. La
+première fonction est impaire et sa série ne nécessite que des termes en
+sinus. La seconde fonction est paire et sa série ne nécessite que des
+termes en cosinus. La troisième fonction, qui est le cas général, n’est
+ni paire ni impaire et sa série contient des termes non nuls en sinus et
+cosinus. Les approximations de ces fonctions à l’ordre 1 sont :
+
+-   $f(x) ~ \approx ~\frac{4}{\pi}sin(x)$ c’est à dire
+    $b_1=\frac{4}{\pi}$
+
+-   $g(x) ~ \approx ~ \frac{4}{\pi}cos(x)$ c’est à dire
+    $a_1=\frac{4}{\pi}$
+
+-   $h(x) ~ \approx ~ \frac{4}{\pi}\Big(cos(x)cos(\frac{\pi}{4})+sin(x)sin(\frac{\pi}{4})$)
+    c’est à dire $a_1=\frac{4}{\pi}.\frac{\sqrt 2}{2}$ et
+    $b_1=\frac{4}{\pi}.\frac{\sqrt 2 }{2}$
+
+En utilisant la propriété
+$cos(\theta_1+\theta_2)=cos(\theta_1)cos(\theta_2)-sin(\theta_1)sin(\theta_2)$,
+la définition des séries de Fourier :
+
+$$f(x)=a_0+\sum_{n=1}^{\infty}~\Big(a_n cos(nx) + b_n sin(nx)\Big)$$
+
+peut se ré-écrire sous la forme :
+
+$$f(x)=a_0+\sum_{n=1}^{\infty}[\alpha_n cos(nx+\beta_n)]$$
+
+où $\alpha_n$ est une amplitude et $\beta_n$ est un déphasage.
+
+Cette nouvelle manière d’écrire les séries de Fourier permet de les voir
+comme une somme de fonctions cosinus munies d’amplitude et de
+déphasages, que l’expression sous forme de somme de sinus et cosinus de
+même fréquence rend moins visible.
+
+Un petit calcul montre que $\alpha_n=\sqrt{a_n^2+b_n^2}$ et
+$\beta_n=- \arctan \frac{a_n}{b_n}$ (si $b_n \neq 0$).
+
+On pourrait montrer une transformation semblable vers une somme de sinus
+plutôt que cosinus.
+
+[background rectangle/.style=fill=olive!5, show background rectangle]
+
+[group style=group size=3 by 2, horizontal sep=1cm, vertical
+sep=2cm,scale=0.7,samples=150,grid=major] ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+
+; ; ; ; ; ; ; ; ; ; ; ; ; ; ;
+
+[align=center,font=**, yshift=2em] (title) at (current bounding
+box.north) Effet de la translation horizontale;**
+
+[fig:effet~t~ranslation]
+
+Notation complexe
+-----------------
+
+Si on voulait être synthétique, on pourrait présenter la série de
+Fourier comme une somme de fonctions périodiques de la forme :
+
+$$\begin{aligned}
+\mathbb{R}& \rightarrow \mathbb{C}\\
+x & \mapsto e^{inx}\end{aligned}$$
+
+Supposons $f$ de période $2\pi$. La décomposition linéaire s’écrit :
+
+$$f(x)=\sum_{-\infty}^{\infty}\; c_n e^{inx}$$
+
+Les coefficients de cette décomposition peuvent se déterminer par :
+
+$$c_n=\frac{1}{2\pi}\int_{u}^{u+2\pi} f(x)e^{-inx}dx
+\label{version_complexe}$$
+
+et ces coefficients complexes vérifient :
+
+$$\begin{aligned}
+c_0=&a_0 \\ 
+c_n=&\frac{1}{2}(a_n-ib_n) \\
+c_{-n}=& \overline{c_n} \text{~~~(complexe conjugué)}\end{aligned}$$
+
+Cette autre manière d’aboutir à la série de Fourier :
+
+-   mène parfois à un calcul plus facile (par exemple, si $f(x)$ est une
+    fonction exponentielle)
+
+-   est plus proche de la forme de la transformée de Fourier, et
+    permettra de voir que la série de Fourier est un cas particulier de
+    la transformée de Fourier.
+
+Coefficients de Fourier de transformées d’une fonction
+------------------------------------------------------
+
+L’application d’une dérivation, d’une translation etc... sur une
+fonction $f$ a un effet particulier sur ses coefficients de Fourier,
+Autrement dit, on peut déduire directement les coefficients de la
+fonction transformée des coefficients de la fonction originale.
+
+Il est utile de savoir démontrer ces propriétés, car les techniques
+utilisées sont d’une utilisation très communs (intégration par partie,
+changement de variable,...).
+
+### Coefficients de Fourier d’une dérivée
+
+Soit $f$ une fonction de période $2\pi$ vérifiant les conditions de
+Dirichlet. Alors :
+
+$$\begin{aligned}
+& a_0(f')&=0 \label{eqderivee}\\
+\text{si~} n\in \mathbb{N}^* & a_n(f')&=n~b_n(f) \\
+\text{si~} n\in \mathbb{N}^* & b_n(f')&=-n~a_n(f) \\
+\text{si~} n\in \mathbb{N}^* & c_n(f')&=i~n~c_n(f)\end{aligned}$$
+
+Plus généralement, si $f$ est de période $T$, c’est-à-dire de pulsation
+$\omega=\frac{2\pi}{T}$ :
+
+$$\begin{aligned}
+& a_0(f')&=0 \\
+\text{si~}n\in \mathbb{N}^* & a_n(f')&=n~\omega~b_n(f) \\
+\text{si~}n\in \mathbb{N}^* & b_n(f')&=-n~\omega~a_n(f) \\
+\text{si~}n\in \mathbb{N}^* & c_n(f')&=i~n~\omega~c_n(f)\end{aligned}$$
+
+### Coefficients de Fourier d’une translatée
+
+Dans le cas des coefficients complexes, le résultat est facile à montrer
+et particulièrement compact :
+
+Si $g(x)=f(x-y)$, alors $c_n(g)=e^{-iny}c_n(f)$ et vice-versa.
+
+Si on considère qu’il s’agit d’une translation d’un signal dans le
+temps, il est rassurant de vérifier que le spectre $\|c_n\|$, c.a.d. la
+répartition de l’énergie du signal selon les fréquences, est inchangé
+par translation.
+
+Linéarité de l’application
+--------------------------
+
+Si $f$ et $g$ sont deux fonctions vérifiant les conditions de Dirichlet,
+toutes deux de période $T$, alors :
+
+$$\begin{aligned}
+a_n(\lambda f+\mu g)=\lambda a_n(f)  + \mu a_n (g) \\
+b_n(\lambda f+\mu g)=\lambda b_n(f)  + \mu b_n (g) \\
+c_n(\lambda f+\mu g)=\lambda c_n(f)  + \mu c_n (g)\end{aligned}$$
+
+Cette propriété découle immédiatement de la linéarité de l’intégrale. On
+a tout intérêt à l’utiliser pour simplifier le calcul de coefficients en
+série de Fourier, si la fonction à traiter se décompose comme la somme
+(plus généralement, combinaison linéaire) de plusieurs fonctions
+élémentaires dont les coefficients se calculent plus simplement. Il
+suffit alors de combiner facilement les coefficients obtenus sur les
+fonctions élémentaires.
+
+Egalité de Parseval
+-------------------
+
+Une propriété importante des séries de Fourier est le théorème de
+Parseval. Soit une fonction $f$, périodique de période $T$. Dans les cas
+des coefficients complexes et réels, l’égalité de Parseval s’écrit :
+
+$$a_0^2+\frac{1}{2}\sum_{n=1}^\infty (a_n^2+b_n^2)=\quad \sum_{n=-\infty}^\infty | c_n|^2 \quad=\quad \frac{1}{T}\int_{periode~T}|f(x)|^2 dx$$
+
+Une interprétation de cette propriété est que l’énergie du signal sur la
+période est la même, qu’elle soit mesurée dans le domaine "direct" $x$
+(temporel, souvent), ou dans le domaine de Fourier.
+
+Un point pratique qui découle de cette expression est que les sommes
+$a_0^2 + \frac{1}{2}\sum_{n=1}^\infty (a_n^2+b_n^2)=\quad\sum_{n=-\infty}^\infty | c_n|^2 $
+sont convergentes, ce qui implique que les coefficients de Fourier
+doivent décroître suffisamment vite en fonction de $n$. Si vos calculs
+aboutissent à des coefficients qui décroissent trop lentement avec $n$,
+voire augmentent, c’est qu’il faut faire la chasse aux erreurs...
+
+Cette expression permet aussi de calculer la valeur de certaines séries
+: les exercices 13 et 14 l’illustrent.
+
+http://madoc.univ-nantes.fr/mod/resource/view.php?id=401686
+
+Soient $(z_1,z_2)\in \mathbb{C}^2$. Montrer que
+$arg(z_1z_2)=arg(z_1)+arg(z_2)$
+
+Démontrer les simplifications dans l’expression des coefficients de
+Fourier, dans le cas des fonctions paires et impaires.
+
+Montrer l’expression des coefficients complexes ([version~c~omplexe] du
+poly) à partir de la définition de la série de Fourier (expression
+[defseries]).
+
+Montrer les expressions des coefficients de Fourier d’une dérivée
+([eqderivee] et trois suivantes).
+
+Développer la fonction $f$, de période $2\pi$, en série de Fourier, en
+utilisant les expressions réelles, puis les expressions complexes de la
+série et de ses coefficients.
+
+$$f(t)=
+\begin{cases}
+-1 & \text{si}\qquad t\in ]-\pi,0] \\
+1 & \text{si}\qquad t\in ]0,\pi]
+\end{cases}$$
+
+Développer la fonction $f$, de période 4, en série de Fourier.
+
+$$f(t)=
+\begin{cases}
+ 0 & \text{si}\qquad t\in ]-2,-1] \\
+ k & \text{si}\qquad t\in ]-1,1] \\
+ 0 & \text{si}\qquad t\in ]1,2] 
+\end{cases}$$
+
+Développer la fonction $f$, de période T, en série de Fourier.
+
+$$f(t)=
+\begin{cases}
+ 0 & \text{si}\qquad t\in ]-\frac{T}{2},0] \\
+ sin(\omega t) & \text{si}\qquad t\in ]0,\frac{T}{2}]
+\end{cases}$$
+
+où $T=\frac{2\pi}{\omega}$ établit le lien entre $T$ et $\omega$
+
+Développer la fonction $f$, de période $2\pi$, en série de Fourier. Elle
+est définie dans $]-\pi,\pi]$ par :
+
+$$f(t)= t+\pi$$
+
+Développer la fonction $f$, de période $2\pi$, en série de Fourier.
+
+$$f(t)=
+\begin{cases}
+ 1 & \text{si}\qquad t\in ]-\frac{\pi}{2},\frac{\pi}{2}] \\
+ 0 & \text{si}\qquad t\in ]\frac{\pi}{2},\frac{3\pi}{2}]
+\end{cases}$$
+
+En déduire que :
+
+$$1-\frac{1}{3}+\frac{1}{5}-\frac{1}{7}\dots=\frac{\pi}{4}$$
+
+Développer la fonction $f$, de période $2\pi$, en série de Fourier. Elle
+est définie sur $]-\pi,\pi]$ par :
+
+$$f(t)=\frac{t^2}{4}$$
+
+En déduire que :
+
+$$\begin{aligned}
+  \sum_{n=1}^{\infty}\frac{1}{n^2}=\frac{\pi^2}{6} \\
+ \sum_{n=1}^{\infty}(-1)^{n+1}\frac{1}{n^2}=\frac{\pi^2}{12} \\
+ \sum_{n=1}^{\infty}\frac{1}{(2n-1)^2}=\frac{\pi^2}{8} \\\end{aligned}$$
+
+A partir des identités trigonométriques ci-dessous, déduire les séries
+de Fourier des fonctions $sin^3(t)$ et $cos^3(t)$.
+
+$$\begin{aligned}
+  sin^3(t)=\frac{3}{4}sin(t)-\frac{1}{4}sin(3t) \\
+ cos^3(t)=\frac{3}{4}cos(t)+\frac{1}{4}cos(3t) \\\end{aligned}$$
+
+Soit la fonction $2\pi$-périodique, définie par :
+
+$$f(t)=
+\begin{cases}
+ \frac{\pi}{8}t(\pi-t) & \text{si}\qquad t\in [0,\pi] \\
+-\frac{\pi}{8}t(\pi+t) & \text{si}\qquad t\in [-\pi,0]
+\end{cases}$$
+
+1.  Représenter $f$ et la fonction $sin(t)$ sur la même courbe.
+
+2.  Calculer les séries de Fourier de $f$ et de $sin(t)$, puis les
+    comparer.
+
+3.  Calculer $\int_0^{\pi}|f(t)-sin(t)|$dt
+
+4.  Calculer $g(t)=f'(t)$ et en déduire ses coefficients de Fourier.
+
+Soit $f(t)=|t|$, définie pour $t\in]-\pi,\pi]$, de période $2\pi$.
+
+1.  Calculer le développement en série de Fourier de $f$
+
+2.  Représenter graphiquement le spectre de $f$
+
+3.  En déduire que :
+
+    $$\sum_{n\geq0}\frac{1}{(2n+1)^2}=\frac{\pi^2}{8} \qquad \text{et} \qquad \sum_{n\geq1}\frac{1}{n^2}=\frac{\pi^2}{6}$$
+
+4.  En regardant leur tête et en utilisant l’outil adapté[^8], calculer
+    :
+
+    $$\sum_{n\geq0}\frac{1}{(2n+1)^4}=\frac{\pi^2}{96} \text{et} \sum_{n\geq1}\frac{1}{n^4}=\frac{\pi^2}{90}$$
+
+Soit la fonction $f$ de période $2\pi$, définie sur $[0,2\pi[$ par
+$f(t)=e^{iat}$, où $a$ est un paramètre réel.
+
+-   Calculer les coefficients de Fourier complexes de $f$
+
+-   En utilisant l’égalité de Parseval montrer que :
+
+    $$\sum_{n=-\infty}^{\infty} \frac{1}{(a-n)^2}=\frac{\pi^2}{(sin(\pi a))^2}$$
+
+Transformée de Fourier
+======================
+
+Définition de la transformée de Fourier
+---------------------------------------
+
+Beaucoup d’enseignants et de livres utilisent indifféremment (et parfois
+sans souci d’homogénéité) $i$ ou $j$ pour noter le complexe dont le
+carré vaut -1. À part s’habituer, pas de remède...
+
+Une fonction $f$ est dite absolument intégrable si
+$\int_{-\infty}^{\infty}|f(t)|dt<\infty$.\
+On note généralement $L^1(\mathbb{R})$ l’ensemble de ces fonctions.
+
+15cm
+
+Si $f$ est une fonction absolument intégrable, elle admet une
+transformée de Fourier, notée de diverses manières :
+${\cal F}(f)=TF(f)=F$, et définie par :
+
+$${\bf F(\omega)=\int_{-\infty}^{\infty}f(t)e^{-j\omegat}dt}$$
+
+Transformation de Fourier inverse :
+
+$${\bf f(t)=\frac{1}{2\pi}\int_{-\infty}^{\infty}F(\omega)e^{j\omegat}d\omega}
+\label{reconstruction}$$
+
+Aux (éventuels) points de discontinuités de $f$,
+l’expression [reconstruction] est à remplacer par :
+
+$$\frac{1}{2\pi}\int_{-\infty}^{\infty}F(\omega)e^{j\omegat}d\omega=\frac{f(t^-)+f(t^+)}{2}
+\label{reconstruction2}$$
+
+(moyenne des limites à gauche et à droite)
+
+[ex~r~ectangle]
+
+Soit la fonction :
+
+$$\begin{aligned}
+    f(t)=
+\begin{cases}
+  1   & \text{si}~ |t|<\frac{a}{2} \quad (a>0, \quad \text{constante}) \\
+  0 & \text{sinon} 
+\end{cases}\end{aligned}$$
+
+On peut montrer que sa transformée de Fourier est
+
+$$F(\omega)= a.sinc(\frac{\omega.a}{2}) \quad \text{où} \quad sinc(x)=\frac{sin(x)}{x}$$
+
+Le recours à la "notation-fonction" $sinc$ est facultatif.
+
+H
+
+[background rectangle/.style=fill=olive!5, show background rectangle]
+
+[group style=group size=1 by 2, horizontal sep=2cm, vertical
+sep=2cm,scale=0.7,samples=150] ; ; ; ;
+
+[background rectangle/.style=fill=olive!5, show background rectangle]
+
+[group style=group size=1 by 2, horizontal sep=2cm, vertical
+sep=2cm,scale=0.7,samples=150] ; ; ; ;
+
+[fourier~t~ransform~e~xample]
+
+Le réel $a$ est ici un paramètre réglant la largeur de la porte, et la
+transformée de Fourier de $f$ sera bien sûr fonction de $a$. Ceci
+permettra de s’interroger sur la manière dont varie la transformée quand
+on fait varier la largeur de la porte. Cet exemple a une grande
+importance dans les applications et mérite d’être mémorisé. retrouvera
+dans le chapitre sur l’analyse temps-fréquence.
+
+[De la diversité des définitions (pas très important)]
+
+Vous pourrez rencontrer, dans certaines sources d’information, d’autres
+définitions de la transformée de Fourier et de la transformée inverse,
+qui ne changent qu’à un facteur constant près, notamment :
+
+$$F(\omega)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}f(t)e^{-j\omegat}dt$$
+
+$$f(t)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}F(\omega)e^{j\omegat}d\omega$$
+
+Une fonction $f$ est dite à énergie finie (*square-integrable* en
+anglais a le mérite de la clarté) si
+$\int_{-\infty}^{\infty}|f(t)|^2dt<\infty$.\
+On note généralement $L^2(\mathbb{R})$ l’ensemble de ces fonctions.
+
+Propriétés de la transformée de Fourier
+---------------------------------------
+
+On retrouve ici des propriétés qui étaient généralement déjà vraies et
+vues pour les séries de Fourier. Pour la plupart d’entre elles, la
+démonstration est assez facile et un bon exercice.
+
+### Expressions alternatives de la transformée dans des cas particuliers
+
+Dans les cas suivants, les simplifications obtenues n’empêchent pas
+d’utiliser l’expression standard  [reconstruction], qui reste parfois
+préférable pour la simplicité du calcul.
+
+$$\text{Si $f$ est paire} \quad F(\omega)=2\int_{0}^{\infty}f(t)cos(\omegat)dt$$
+
+$$\text{Si $f$ est impaire} \quad F(\omega)=-2j\int_{0}^{\infty}f(t)sin(\omegat)dt$$
+
+### Linéarité
+
+Soient $f$ et $g$ deux fonctions admettant une transformée de Fourier et
+$\lambda$ et $\mu$ deux réels. La transformée de Fourier de la
+combinaison linéaire est la combinaison linéaire des transformées de
+Fourier.
+
+$$\label{transfo-linearite}
+\quad {\cal F}(\lambda f+\mu g)=\lambda {\cal F}(f)+\mu {\cal F}(g)$$
+
+Un intérêt est que la transformée de Fourier d’une fonction qui n’est
+pas simple, mais qui peut s’exprimer comme la combinaison linéaire de
+fonctions élémentaires, peut être calculée par la combinaison linéaire
+des transformées de Fourier de ces fonctions élémentaires.
+
+### Dérivation
+
+Si $f'$ est la dérivée de $f$ et si elle admet une transformée de
+Fourier alors :
+
+$$\label{transfo-derivation}
+  {\cal F}(f')(\omega)=j\omega{\cal F}(f)(\omega)$$
+
+### Translation temporelle
+
+[signalretard] Notons $f_\tau$ la fonction telle que
+$f_\tau(t) = f(t-\tau)$. On peut montrer facilement que :
+
+$$\label{transfo-translation}
+{\cal F}(f_\tau)(\omega)=e^{-j\omega\tau} {\cal F}(f)(\omega)$$
+
+En particulier, remarquons que, conformément à l’intuition, la
+translation temporelle d’un signal ne change pas la répartition de son
+énergie sur l’ensemble des fréquences, mais n’affecte que la phase de la
+transformée :
+
+$$|{\cal F}(f_\tau)|=|{\cal F}(f)|$$
+
+C’est une bonne occasion de se rappeler que le spectre fréquentiel d’un
+signal, que l’on trace et que l’on interprète assez familièrement, omet
+l’information de phase. Celle-ci n’en est pas pas moins essentielle à la
+reconstruction du signal dans le domaine temporel, et $F(\omega)$, qui
+apparait dans le calcul de la transformée inverse, est, de manière
+générale, une quantité complexe.
+
+Cette propriété s’appelle parfois théorème du retard . Vous pourriez
+examiner et tenter d’interpréter l’effet, dans le domaine temporel,
+d’une translation réalisée dans le domaine de Fourier.
+
+### Homothétie
+
+Pour une réel $k>0$,
+
+$${\cal F}(f(kt)))=\frac{1}{k}{\cal F}(f(\frac{t}{k}))$$
+
+Un cas assez simple d’application particulière, qui recoupe une
+situation déjà traitée, est la fonction porte de largeur quelconque.
+
+### Egalité de Parseval
+
+Comme dans le cas des séries de Fourier, cette égalité établit l’égalité
+de l’énergie vue dans le domaine d’origine ( temporel ) et le domaine de
+Fourier ( fréquentiel ).
+
+$$\label{eq:parseval2}
+  \int_{-\infty}^{\infty}|f(t)|^2dt=\frac{1}{2\pi}\int_{-\infty}^{\infty}|F(\omega)|^2d\omega$$
+
+Attention, de façon générale, il s’agit de modules sur des complexes et
+pas seulement de valeurs absolues apparemment superflues.
+
+Convolution, Dirac et Transformée de Fourier
+--------------------------------------------
+
+Il est utile de voir
+
+$$(f*g)(t)=\int_{-\infty}^{\infty}f(\tau)g(t-\tau)d\tau$$
+
+comme un produit scalaire entre fonctions.
+
+La convolution est une opération qui combine deux fonctions $f$ et $g$
+pour en créer une troisième, notée $f*g$. Souvent, dans les
+applications, $f$ est un signal et $g$ est un filtre (ou noyau) que la
+convolution vient appliquer sur le signal $f$ pour l’améliorer ou en
+tirer une information intéressante. La convolution est aussi impliquée
+dans la construction de représentation de séquences ou d’images pour
+faire de l’apprentissage et de la reconnaissance.
+
+Imaginons qu’un phénomène qui nous intéresse produit un signal $f(t)$ où
+$t$ désigne le temps, au fond de l’espace lointain. Pas de chance :
+comme ce signal nous vient de loin dans l’espace, ce long voyage lui
+fait subir des perturbations. Pour
+
+15cm
+
+Soient $f$ et $g$ deux fonctions à énergie finie. Le produit de
+convolution entre $f$ et $g$ noté $f*g$ est défini par :
+
+$$(f*g)(t)=\int_{-\infty}^{\infty}g(\tau)f(t-\tau)d\tau$$
+
+[scale=0.52,ymin=-1.5,ymax=1.5,samples=70, xlabel=t,title=$f$] ;
+
+[scale=0.52,ymin=-1.5,ymax=1.5,xlabel=$\tau$,title=$g$] ; ;
+
+[scale=0.52,ymin=-1.5,ymax=1.5,samples=70,
+xlabel=$\tau$,title=$g(\tau)f(360-\tau)$] ; ;
+
+Le produit de convolution vérifie :
+
+$$\begin{aligned}
+  f*g & =g*f & \textit{(commutativité)} \label{convolution-commut}\\
+\text{~donc~} (f*g)(t) &=\int_{-\infty}^{\infty}f(t-\tau)g(\tau)d\tau & \\
+f*(g+h) & =f*g+f*h & \textit{(distributivité)} \label{convolution-distrib}\\
+(f*g)' & =f'*g=f*g' & \textit{(dérivation)} \label{convolution-derivation}\end{aligned}$$
+
+Il possède une propriété importante concernant la transformation de
+Fourier :
+
+$$\label{convol_transfo1}
+{\cal F}(f*g)={\cal F}(f).{\cal F}(g)$$
+
+et dans le sens inverse :
+
+$${\cal F}(f.g)=\frac{1}{2\pi}{\cal F}(f)*{\cal F}(g)$$
+
+La même propriété existe d’ailleurs pour les séries de Fourier :
+
+$$c_n(f*g)=c_n(f).c_n(g)$$
+
+Pour s’en tenir à un point de vue très pratique, la convolution donne un
+moyen parfois astucieux de calculer (manuellement) des transformées de
+Fourier de fonctions que l’on parvient à identifier comme produit de
+convolution de deux fonctions assez simples. Plus largement que le
+calcul de transformée, si on doit réaliser la convolution d’un signal
+par un filtre linéaire (par exemple filtrer un son ou une image),
+l’opération peut être réalisée dans le domaine de Fourier par une
+multiplication, ce qui permet parfois de réduire considérablement le
+coût (informatique) de calcul.
+
+L’exercice où on voit que la convolution d’une fonction porte par
+elle-même donne un triangle est l’occasion d’aller creuser un peu : le
+triangle est plus lisse que la porte (il est déjà continu, à défaut
+d’être dérivable). Convoluons ce triangle par lui-même, et ce résultat
+par lui-même, etc. pour voir vers quoi cela semble converger :
+
+![image](convgauss1.pdf) ![image](convgauss2.pdf)
+![image](convgauss3.pdf) Fonction initiale
+
+Après 1 itération
+
+Après 6 itérations\
+
+Ce processus semble converger vers une forme gaussienne. Un indice
+supplémentaire allant dans le sens de cette supposition est que la
+convolution d’une gaussienne (de moyenne $\mu_1$ et de variance
+$\sigma_1^2$) par une gaussienne (de moyenne $\mu_2$ et de variance
+$\sigma_2^2$) donne une gaussienne (le montrer est un bon exercice):
+
+$$(\frac{e^\frac{(t-\mu_1)}{2\sigma_1^2}}{\sigma_1\sqrt{2\pi}})*
+(\frac{e^\frac{(t-\mu_2)}{2\sigma_2^2}}{\sigma_2\sqrt{2\pi}})=(\frac{e^\frac{(t-(\mu_1+\mu_2))}{2(\sigma_1^2+\sigma_2^2)}}{\sqrt{2\pi(\sigma_1^2+\sigma_2^2)}})$$
+
+Au passage, une autre propriété remarquable :
+
+$$\int_{-\infty}^{\infty}(f*g)(t) dt=\int_{-\infty}^{\infty}f(t)dt \int_{-\infty}^{\infty}g(t)dt$$
+
+#### Illustrations {.unnumbered}
+
+Souvent, dans les applications de la convolution, une fonction est un
+signal provenant de mesures (d’une antenne, les cours de la bourse ou la
+pression atmosphérique...) et l’autre est dit fonction noyau (ou
+simplement noyau ), dont la forme est choisie pour modifier, analyser ou
+améliorer le signal d’une façon utile.
+
+Le premier exemple (fig. [fig:ex1]) montre comment on peut
+approximativement retirer le bruit sur un signal par convolution du
+signal bruité en le convoluant par une fonction gaussienne (où on
+commencera à se dire tiens, c’est simplement une moyenne locale
+pondérée, un effet de lissage ).
+
+[h] ![image](con2.pdf)(a) ![image](con3.pdf)(b) [fig:ex1]
+
+Le second exemple montre comment on peut détecter des discontinuités
+fortes dans un signal, en convoluant le signal (on a choisi un signal
+comportant des variations brusques) avec un noyau dérivée de gaussienne
+(où on commencera à se dire tiens, ca ressemble fort à une sorte de
+calcul de dérivée ).
+
+![image](con4.pdf) ![image](con5.pdf) Ci-dessus à droite : fonction
+dérivée de gaussienne par laquelle on a convolué notre fonction initiale
+:
+
+En dimension 2 (cas du traitement d’image), on modélise souvent le flou
+introduit par une image (par exemple en raison d’un mouvement
+malheureux) comme une convolution : image floue = image nette \*
+operateur de flou. Remarquons au passage qu’une vision pessimiste de
+notre noyau gaussien débruiteur est de dire qu’il introduit du flou dans
+le signal. Une opération bien plus difficile que la convolution mais
+encore plus intéressante consiste alors à trouver l’image nette à partir
+de l’image floue (en particulier sans connaître l’opérateur flouteur) :
+c’est une déconvolution aveugle.\
+Le même genre de problème en dimension 1 quand un signal émis par votre
+téléphone mobile veut atteindre l’antenne du réseau : il y parvient par
+de multiples chemins (réflexion sur les surfaces voisines...), ce qui
+donne une combinaison linéaire de diverses versions du signal émis,
+arrivant avec plus ou moins de retard en fonction de la longueur de
+chaque chemin. Le récepteur doit retrouver le signal d’origine, pour
+bien le comprendre : voilà qui ressemble encore à notre problème de
+défloutage. Une technique classique consiste à transmettre (de
+l’émetteur au récepteur), de temps à autre, un signal que le récepteur
+connait à l’avance : la comparaison de cette connaissance préalable avec
+ce qui lui parvient lui permettra d’estimer l’opération de flou causé
+par les chemins multiples. Il pourra utiliser cet estimé pour déflouter
+la voix ou des données de l’utilisateur qui lui parviennent les quelques
+secondes suivantes...
+
+![image](image1.pdf) ![image](image2.pdf) Image originale
+
+Image convoluée par une gaussienne 2D\
+
+### Impulsion de Dirac et transformation de Fourier
+
+Considérons une fonction rectangle :
+
+$$v(t)=
+\begin{cases}
+  0   & \text{si}~t \in [-\varepsilon,+\varepsilon] \\
+  \frac{1}{2\varepsilon} & \text{sinon}
+\end{cases}$$
+
+![image](dirac1.pdf)
+
+L’impulsion de Dirac est obtenue en faisant tendre $\varepsilon$ vers 0
+: le rectangle est infiniment haut, infiniment étroit mais reste d’aire
+1 à la limite. On aurait pu obtenir cette même limite à partir d’une
+fonction rectangle non nulle sur $[0,2\varepsilon]$, ou encore d’une
+fonction triangle ... où le $1$ indique l’aire et non la valeur de
+l’impulsion en 0 (qui est $+\infty$). L’impulsion de Dirac est
+caractérisée par les propriétés suivantes :
+
+$$\begin{aligned}
+    \delta(t)=
+\begin{cases}
+  0   & \text{si}~t\neq0 \\
+  \infty & \text{si}~t=0 
+\end{cases}\end{aligned}$$
+
+$$\int_{-\infty}^{\infty}\delta(t)dt~=~1$$
+
+Le terme informel impulsion reste vague quant à la nature mathématique
+de cet objet. Cette impulsion n’est en fait pas une *fonction*, mais une
+*distribution*, les distributions étant une généralisation de la notion
+de fonction. Ces extensions sont des apports de travaux des années
+1920-1950.
+
+L’impulsion de Dirac est notée graphiquement : ![image](dirac2.pdf)
+
+$$(f*\delta)(t)=\int_{-\infty}^{\infty}f(\tau)\delta(t-\tau)d\tau~=~f(t)
+\label{proprietedirac}$$
+
+Autrement dit, l’impulsion de Dirac est l’élément neutre pour la
+convolution.
+
+Propriétés concernant l’impulsion de Dirac et la transformation de
+Fourier :
+
+$$\begin{aligned}
+{\cal F}(\delta(t))~=~1 \\
+{\cal F}(1)=2\pi\delta(\omega) \end{aligned}$$
+
+### Transformation de Fourier d’une fonction gaussienne
+
+Soit $a$ une constante strictement positive.
+
+$${\cal F}(e^{-at^2})=\sqrt{\frac{\pi}{a}}e^{-\frac{\omega^2}{4a}}$$
+
+Autrement dit : la transformée de Fourier d’une gaussienne est aussi une
+gaussienne.
+
+Il s’agit là d’une forme[^9] de fonction que l’on rencontre à chaque
+coin de rue, surtout du côté des probabilités mais de manière encore
+plus large. Cette propriété, qui méritera une démonstration, n’est pas
+qu’esthétique - elle est par exemple exploitée dans la modulation
+utilisée dans la téléphonie mobile courante.
+
+Transformée de Fourier en dimension 2
+-------------------------------------
+
+Une application essentielle de la transformée de Fourier en dimension 2
+est le traitement d’images. La transformée existe aussi en dimension 3,
+utilisée pour les images volumiques , et également en dimension plus
+élevée.
+
+$${\cal F}(\omega_1,\omega_2)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(u,v)e^{-j(\omega_1u+\omega_2v)}~du~dv$$
+
+et la transformée inverse (où on omettra le cas des discontinuités) :
+
+$$f(u,v)=  \frac{1}{(2\pi)^2} \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}{\cal F}(\omega_1,\omega_2)e^{j(\omega_1u+\omega_2v)}~d\omega_1~d\omega_2$$
+
+On verra en exercice des cas où le calcul de la transformée, qui
+implique un calcul d’intégrale double, peut (ou pas) se formuler comme
+le produit de deux transformée en dimension 1. Déterminer la transformée
+de Fourier de la fonction suivante (fonction porte ou impulsion
+rectangulaire ) :
+
+$$p(t) =
+\begin{cases}
+1 & \mbox{si } t \in ] - \frac{a}{2},\frac a 2 ]\\
+0 & \mbox{sinon}
+\end{cases}$$
+
+Démontrer les propriétés suivantes de la transformation de Fourier :
+
+1.  dérivation (propriété [transfo-derivation]),
+
+2.  translation (propriété [transfo-translation]),
+
+3.  linéarité (propriété [transfo-linearite]).
+
+Déterminer la transformée de Fourier de la fonction suivante (fonction
+triangle ou impulsion triangulaire ) :
+
+$$f(t) =
+\begin{cases}
+-\frac 1 a  t + 1 & \mbox{si } t \in [ 0, a ]\\
+\frac 1 a  t + 1 & \mbox{si } t \in [ -a, 0 [\\
+0 & \mbox{sinon}
+\end{cases}$$
+
+En utilisant les propriétés de la transformée de Fourier, déterminer la
+transformée de Fourier de la fonction triangle (donnée ci-dessus) en
+utilisant le fait qu’on peut exprimer la dérivée de la fonction triangle
+en fonction de la fonction porte.
+
+[convol-porte] Déterminer le produit de convolution de la fonction porte
+par elle-même.
+
+Démontrer les propriétés suivantes du produit de convolution :
+
+1.  commutativité (propriété [convolution-commut]),
+
+2.  distributivité (propriété [convolution-distrib]),
+
+3.  dérivation (propriété [convolution-derivation]).
+
+Démontrer la propriété [convol~t~ransfo1] du produit de convolution par
+rapport à la transformation de Fourier.
+
+Déterminer la transformée de Fourier de la fonction triangle en
+utilisant les propriétés du produit de convolution et le produit de
+convolution de la fonction porte par elle-même.
+
+Déterminer la transformée de Fourier de la fonction suivante définie sur
+$\mathbb R^2$ :
+
+$$f(x,y) =
+\begin{cases}
+ 1  & \mbox{si } -1 \leq x \leq 1 \mbox{ et } -1 \leq y \leq 1\\
+0 & \mbox{sinon}
+\end{cases}$$
+
+Déterminer la transformée de Fourier de la fonction suivante
+(gaussienne) : $$f(t) = e^{-\pi t^2}$$
+
+[^1]: <https://fr.wikipedia.org/wiki/Espace_fonctionnel>
+
+[^2]: <https://fr.wikipedia.org/wiki/Distribution_(mathématiques)>
+
+[^3]: “un” et non “le” car on pourrait en définir d’autres, mais
+    celui-ci est de loin le plus usuel.
+
+[^4]: Attention : il existe une autre définition de la série de Fourier,
+    où ce coefficient $a_0$ est affecté d’un coefficient multiplicateur
+    $1/2$. Ca n’est guère un problème, mais les expressions de calculs
+    des coefficients doivent être adaptées à ce choix.
+
+[^5]: On peut s’en débarrasser avec une ruse nommée “facteur de
+    Lanczos”, qu’on n’approfondit pas dans ce cours.
+
+[^6]: Peter Gustav Lejeune-Dirichlet ( 1805 - 1859 )
+
+[^7]: donc de *pulsation fondamentale* $\omega=\frac{2\pi}{T}$
+
+[^8]: Voilà un indice qui n’engage à rien sinon à réfléchir à deux fois
+    avant de se lancer dans de grands calculs
+
+[^9]: On pourra regarder dans un second temps la généralité de
+    l’expression ci-dessus, pour des gaussiennes de moyennes et
+    variances diverses, ainsi que les constantes de normalisation.

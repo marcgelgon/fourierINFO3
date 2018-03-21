@@ -1,0 +1,40 @@
+\select@language {french}
+\contentsline {chapter}{\numberline {1}Intuitions sur les espaces de fonctions}{3}
+\contentsline {section}{\numberline {1.1}Composition-décomposition de vecteurs dans $\mathbb {R}^n$}{3}
+\contentsline {subsection}{\numberline {1.1.1}L'espace vectoriel $\mathbb {R}^n$, décomposition dans la base canonique}{3}
+\contentsline {subsection}{\numberline {1.1.2}Décomposition d'un vecteur dans une base quelconque}{4}
+\contentsline {subsubsection}{Par résolution d'un sytème linéaire}{4}
+\contentsline {subsubsection}{Par projections orthogonales}{4}
+\contentsline {section}{\numberline {1.2}Mêmes notions, mais sur des fonctions}{6}
+\contentsline {subsection}{\numberline {1.2.1}Produit scalaire entre fonctions}{7}
+\contentsline {subsection}{\numberline {1.2.2}Norme d'une fonction}{8}
+\contentsline {subsection}{\numberline {1.2.3}Angle entre fonctions}{8}
+\contentsline {chapter}{\numberline {2}Séries de Fourier}{13}
+\contentsline {section}{\numberline {2.1}De l'utilité d'étudier l'analyse de Fourier}{13}
+\contentsline {section}{\numberline {2.2}Définition des séries de Fourier et calcul de leur coefficients}{14}
+\contentsline {section}{\numberline {2.3}Reconstruction approximative}{16}
+\contentsline {section}{\numberline {2.4}Conditions de convergence de la série de Fourier}{18}
+\contentsline {section}{\numberline {2.5}Cas d'une fonction de période quelconque}{19}
+\contentsline {section}{\numberline {2.6}Cas où le calcul des coefficients $a_n$ et $b_n$ se simplifie}{19}
+\contentsline {subsection}{\numberline {2.6.1}Si $f$ est paire}{20}
+\contentsline {subsection}{\numberline {2.6.2}Si $f$ est impaire}{20}
+\contentsline {section}{\numberline {2.7}La série de Fourier sous la forme (amplitudes, déphasages)}{20}
+\contentsline {section}{\numberline {2.8}Notation complexe}{21}
+\contentsline {section}{\numberline {2.9}Coefficients de Fourier de transformées d'une fonction}{23}
+\contentsline {subsection}{\numberline {2.9.1}Coefficients de Fourier d'une dérivée}{23}
+\contentsline {subsection}{\numberline {2.9.2}Coefficients de Fourier d'une translatée}{24}
+\contentsline {section}{\numberline {2.10}Linéarité de l'application}{24}
+\contentsline {section}{\numberline {2.11}Egalité de Parseval}{24}
+\contentsline {chapter}{\numberline {3}Transformée de Fourier}{29}
+\contentsline {section}{\numberline {3.1}Définition de la transformée de Fourier}{29}
+\contentsline {section}{\numberline {3.2}Propriétés de la transformée de Fourier}{31}
+\contentsline {subsection}{\numberline {3.2.1}Expressions alternatives de la transformée dans des cas particuliers}{31}
+\contentsline {subsection}{\numberline {3.2.2}Linéarité}{31}
+\contentsline {subsection}{\numberline {3.2.3}Dérivation}{32}
+\contentsline {subsection}{\numberline {3.2.4}Translation temporelle}{32}
+\contentsline {subsection}{\numberline {3.2.5}Homothétie}{32}
+\contentsline {subsection}{\numberline {3.2.6}Egalité de Parseval}{33}
+\contentsline {section}{\numberline {3.3}Convolution, Dirac et Transformée de Fourier}{33}
+\contentsline {subsection}{\numberline {3.3.1}Impulsion de Dirac et transformation de Fourier}{37}
+\contentsline {subsection}{\numberline {3.3.2}Transformation de Fourier d'une fonction gaussienne}{38}
+\contentsline {section}{\numberline {3.4}Transformée de Fourier en dimension 2}{38}
